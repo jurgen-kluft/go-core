@@ -3,7 +3,6 @@ package corepkg
 import "fmt"
 
 type StandardLogger struct {
-	// LogLevel is the current logging level
 	LogLevel Level
 }
 
@@ -13,23 +12,15 @@ func NewStandardLogger(level Level) *StandardLogger {
 	}
 }
 
-func (log *StandardLogger) LogPrint(message string) {
-	fmt.Print(message)
-}
-
-func (log *StandardLogger) LogPrintf(format string, args ...any) {
-	fmt.Printf(format, args...)
-}
-
-func (log *StandardLogger) LogPrintln(message ...string) {
-	for _, msg := range message {
-		fmt.Println(msg)
-	}
-}
-
-func (log *StandardLogger) LogInfo(message string) {
+func (log *StandardLogger) LogInfo(message ...string) {
 	if log.LogLevel <= LevelInfo {
-		fmt.Print("INFO: ", message)
+		if len(message) > 0 {
+			fmt.Print("INFO: ")
+			for _, m := range message {
+				fmt.Print(m)
+			}
+		}
+		fmt.Println()
 	}
 }
 
@@ -37,12 +28,14 @@ func (log *StandardLogger) LogInfof(format string, args ...any) {
 	if log.LogLevel <= LevelInfo {
 		fmt.Printf("INFO: ")
 		fmt.Printf(format, args...)
+		fmt.Println()
 	}
 }
 
 func (log *StandardLogger) LogWarning(err error) {
 	if log.LogLevel <= LevelWarning {
 		fmt.Print("WARNING: ", err.Error())
+		fmt.Println()
 	}
 }
 
@@ -50,6 +43,7 @@ func (log *StandardLogger) LogWarningf(format string, args ...any) {
 	if log.LogLevel <= LevelWarning {
 		fmt.Print("WARNING: ")
 		fmt.Printf(format, args...)
+		fmt.Println()
 	}
 }
 
@@ -64,6 +58,7 @@ func (log *StandardLogger) LogError(err error, msg ...string) error {
 		} else {
 			fmt.Print("ERROR: ", err.Error())
 		}
+		fmt.Println()
 	}
 	return err
 }
@@ -75,6 +70,7 @@ func (log *StandardLogger) LogErrorf(err error, format string, args ...any) erro
 		if err != nil {
 			fmt.Print(" - ", err.Error())
 		}
+		fmt.Println()
 	}
 	return err
 }

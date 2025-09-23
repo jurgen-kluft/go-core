@@ -13,10 +13,7 @@ const (
 )
 
 type Logger interface {
-	LogPrint(message string)
-	LogPrintf(format string, args ...any)
-	LogPrintln(message ...string)
-	LogInfo(message string)
+	LogInfo(message ...string)
 	LogInfof(format string, args ...any)
 	LogWarning(err error)
 	LogWarningf(format string, args ...any)
@@ -32,33 +29,12 @@ func SetLogger(l Logger) {
 	logger = l
 }
 
-func LogPrint(message string) {
-	logger.LogPrint(message)
+func LogInf(message ...string) {
+	logger.LogInfo(message...)
 }
 
-func LogPrintf(format string, args ...any) {
-	logger.LogPrintf(format, args...)
-}
-
-func LogPrintlnf(format string, args ...any) {
-	logger.LogPrintf(format, args...)
-	logger.LogPrintln("")
-}
-
-func LogPrintln(message ...string) {
-	if len(message) == 0 {
-		logger.LogPrintln("")
-	} else {
-		logger.LogPrintln(message...)
-	}
-}
-
-func LogInf(message string) {
-	logger.LogInfo(message)
-}
-
-func LogInfo(message string) {
-	logger.LogInfo(message)
+func LogInfo(message ...string) {
+	logger.LogInfo(message...)
 }
 
 func LogInff(format string, args ...any) {
@@ -115,16 +91,7 @@ func NewNillLogger() Logger {
 	return &NillLogger{}
 }
 
-func (log *NillLogger) LogPrint(message string) {
-}
-
-func (log *NillLogger) LogPrintf(format string, args ...any) {
-}
-
-func (log *NillLogger) LogPrintln(message ...string) {
-}
-
-func (log *NillLogger) LogInfo(message string) {
+func (log *NillLogger) LogInfo(message ...string) {
 }
 
 func (log *NillLogger) LogInfof(format string, args ...any) {
