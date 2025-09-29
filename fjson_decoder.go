@@ -633,7 +633,7 @@ func (c *jsonContext) getString() jsonField {
 			c.Cursor++ // move past the closing quote
 			return jsonField{Begin: start, Length: int16(c.Cursor-start) - 1, Type: JsonValueTypeString}
 		case '\\':
-			c.Cursor++ // skip escaped character
+			c.Cursor = c.Cursor + 2 // skip escaped character
 		default:
 			c.Cursor++
 		}
